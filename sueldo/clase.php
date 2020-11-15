@@ -50,6 +50,13 @@
                         }
                     </script>
                      ";
+            } else {
+                if($this->datos= $this->consulta->fetch_array()){
+                   $this->idSueldo= $this->datos['idSueldo']; 
+                   echo "<a class=' btn btn-success' href='formmodificar.php?idSueldo=$this->idSueldo'>Modificar boleta de sueldo</a>";
+                   echo "<h1>Se encontró boleta de sueldo</h1>"; 
+                }
+                
             }    
         }
         //metodo para guardar sueldo
@@ -73,6 +80,68 @@
                                                 '$this->feriadosTrabajados','$this->feriadosNoTrabajados','$this->fecha')");
             echo "<script>alert('Sueldo Registrado');window.location.href='index.php';</script>";
             $this->con->close();            
+        }
+        //modificación de liquidación
+        public function datosModificar($ids){
+            $this->idSueldo = $ids;
+            $this->consulta= $this->con->query("SELECT * FROM sueldo WHERE idSueldo = '$this->idSueldo'");
+            if($this->datos= $this->consulta->fetch_array()){
+                ?>
+                    <form id="formnuevo" action="formnuevo.php" method="POST">
+                        <input type="hidden" name="mesSueldo" value="<?php echo $this->datos['mesSueldo'] ?>">
+                        <input type="hidden" name="anioSueldo" value="<?php echo $this->datos['anioSueldo'] ?>">
+                        <input type="hidden" name="idUsuario" value="<?php echo $this->datos['idUsuario'] ?>">
+                        <div class="form-group">
+                            <label for="diasTrabajados">Cantidad de días trabajados</label>
+                            <input type="number" class="form-control" id="diasTrabajados" name="diasTrabajados" value="<?php echo $this->datos['diasTrabajados'] ?>" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="basico">Básico</label>
+                            <select class="form-control" id="basico" name="basico" required="">
+                                <option value="">Seleccionar</option>
+                                <option value="46790.08" <?php if($this->datos['basico']=="46790.08") {echo "selected='selected'";} ?>>Administrativo Cat. A</option>
+                                <option value="46925.50" <?php if($this->datos['basico']=="46925.50") {echo "selected='selected'";} ?>>Administrativo Cat. B</option>
+                                <option value="47400.06" <?php if($this->datos['basico']=="47400.06") {echo "selected='selected'";} ?>>Administrativo Cat. C</option>                                        
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="obraSocial">Obra Social</label>
+                            <select class="form-control" id="obraSocial" name="obraSocial" required="">
+                                <option value="">Seleccionar</option>
+                                <option value="OSDE BINARIO" <?php if($this->datos['obraSocial']=="OSDE BINARIO") {echo "selected='selected'";} ?>>OSDE BINARIO</option>
+                                <option value="OSECAC" <?php if($this->datos['obraSocial']=="OSECAC") {echo "selected='selected'";} ?>>OSECAC</option> 
+                                <option value="PRENSA" <?php if($this->datos['obraSocial']=="PRENSA") {echo "selected='selected'";} ?>>PRENSA</option>
+                                <option value="SUBSIDIO DE SALUD" <?php if($this->datos['obraSocial']=="SUBSIDIO DE SALUD") {echo "selected='selected'";} ?>>SUBSIDIO DE SALUD</option>   
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="antiguedad">Antigüedad</label>
+                            <input type="number" class="form-control" id="antiguedad" name="antiguedad" value="<?php echo $this->datos['antiguedad'] ?>" required="" >
+                        </div>
+                        <div class="form-group">
+                            <label for="diasFeriados">Cantidad de días feriados</label>
+                            <input type="number" class="form-control" id="diasFeriados" name="diasFeriados" value="<?php echo $this->datos['diasFeriados'] ?>" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="feriadosTrabajados">Cantidad de días feriados trabajados</label>
+                            <input type="number" class="form-control" id="feriadosTrabajados" name="feriadosTrabajados" value="<?php echo $this->datos['feriadosTrabajados'] ?>" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="feriadosNoTrabajados">Cantidad de días feriados no trabajados</label>
+                            <input type="number" class="form-control" id="feriadosNoTrabajados" name="feriadosNoTrabajados" value="<?php echo $this->datos['feriadosNoTrabajados'] ?>" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha">Fecha</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $this->datos['fecha'] ?>">
+                        </div>
+                        <div class="form-group">                                
+                            <button class="btn btn-success" type="submit">Modificar</button>
+                            <a class="btn btn-danger" href="index.php">Cancelar</a>
+                        </div>
+                    </form>
+                    
+                <?php    
+            }
         }
     }
 ?>

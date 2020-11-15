@@ -10,7 +10,7 @@
         <tbody>
             <tr>
                 <input type="hidden" name="idEgreso" value="<?php echo $_GET['idEgreso']?>">
-                <td style="width: 30%; height=100px" rowspan="2"><img src="agenciaj.jpg"/></td>
+                <td style="width: 30%; height:100px" rowspan="2"><img src="agenciaj.jpg"/></td>
                 <td style="width: 30%; text-align: center;"><strong>Agencia Viaja y Sueña</strong></td>
                 <td style="width: 30%; text-align: right;"><strong>San Martin 385</strong></td>
             </tr>
