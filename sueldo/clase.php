@@ -87,10 +87,8 @@
             $this->consulta= $this->con->query("SELECT * FROM sueldo WHERE idSueldo = '$this->idSueldo'");
             if($this->datos= $this->consulta->fetch_array()){
                 ?>
-                    <form id="formnuevo" action="formnuevo.php" method="POST">
-                        <input type="hidden" name="mesSueldo" value="<?php echo $this->datos['mesSueldo'] ?>">
-                        <input type="hidden" name="anioSueldo" value="<?php echo $this->datos['anioSueldo'] ?>">
-                        <input type="hidden" name="idUsuario" value="<?php echo $this->datos['idUsuario'] ?>">
+                        <input type="text" id="mesSueldo" name="mesSueldo" value="<?php echo $this->datos['mesSueldo'] ?>" required="">
+                        <input type="text" id="idSueldo" name="idSueldo" value="<?php echo $this->datos['idSueldo'] ?>" required="">
                         <div class="form-group">
                             <label for="diasTrabajados">Cantidad de días trabajados</label>
                             <input type="number" class="form-control" id="diasTrabajados" name="diasTrabajados" value="<?php echo $this->datos['diasTrabajados'] ?>" required="">
@@ -133,15 +131,29 @@
                         <div class="form-group">
                             <label for="fecha">Fecha</label>
                             <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $this->datos['fecha'] ?>">
-                        </div>
-                        <div class="form-group">                                
-                            <button class="btn btn-success" type="submit">Modificar</button>
-                            <a class="btn btn-danger" href="index.php">Cancelar</a>
-                        </div>
-                    </form>
+                        </div>                    
                     
                 <?php    
             }
+        }
+        // confirmar modificación de boleta de sueldo
+        public function confirmarModificacion($ids,$dt,$bas,$os,$ant,$df,$ft,$fnt,$fec){
+            $this->idSueldo=$ids;
+            $this->diasTrabajados=$dt;
+            $this->basico=$bas;
+            $this->obraSocial=$os;
+            $this->antiguedad=$ant;
+            $this->diasFeriados=$df;
+            $this->feriadosTrabajados=$ft;
+            $this->feriadosNoTrabajados=$fnt;
+            $this->fecha=$fec;
+            
+            $this->consulta = $this->con->query("UPDATE sueldo SET diasTrabajados='$this->diasTrabajados',basico='$this->basico',"
+                    . "obraSocial='$this->obraSocial', antiguedad='$this->antiguedad', diasFeriados='$this->diasFeriados', "
+                    . "feriadosTrabajados='$this->feriadosTrabajados', feriadosNoTrabajados='$this->feriadosNoTrabajados',"
+                    . " fecha='$this->fecha' WHERE idSueldo='$this->idSueldo'");
+            echo "<script>alert('Sueldo modificado');window.location.href='index.php'</script>";
+            $this->con->close();            
         }
     }
 ?>

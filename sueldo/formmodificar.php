@@ -1,6 +1,6 @@
 <?php include '../config/sesion.php';
     $pagina=10;
-    include 'clase.php';
+   include 'clase.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
 </head>
 <body class="theme-red">
     <!-- Loader -->
-    <?php// include '../config/loader.php'; ?>
+    <?php include '../config/loader.php'; ?>
     <!-- Fin Loader -->
     <!-- Menu Superior -->
     <?php include '../config/menusuperior.php'; ?>
@@ -23,25 +23,35 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-                 <h2>Modificar Liquidación</h2>
+                <h2>Modificar Liquidación</h2>
             </div> 
             <div class="row clearfix">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <div class="card">
-                        <div class="header">
-                             
-                            <?php
-                                
-                                 $objetoMostrarFormulario = new Sueldo();
-                                 $objetoMostrarFormulario->datosModificar($_GET['idSueldo']);
-                                if(isset($_POST['mesSueldo'])){                                 
-                                    $objetoNuevo->guardar($_POST['mesSueldo'],$_POST['anioSueldo'],$_POST['idUsuario'],$_POST['diasTrabajados'],
-                                                          $_POST['basico'],$_POST['obraSocial'],$_POST['antiguedad'],$_POST['diasFeriados'],
-                                                          $_POST['feriadosTrabajados'],$_POST['feriadosNoTrabajados'],$_POST['fecha']); 
-                                }
+                        <div class="header"> 
+                            <form id="formmodificar" action="formmodificar.php" method="POST">                                              
+                                <input type="text" name="idSueldo" value="<?php echo $_GET['idSueldo']?>">   
+                                <?php        
+                                    if(!isset($_POST['mesSueldo'])){
+                                    $objetoDatos = new Sueldo();
+                                    $objetoDatos->datosModificar($_GET['idSueldo']);
+                                    }
+                                ?>                            
+                                <div class="form-group">                                
+                                    <button class="btn btn-success" type="submit">Modificar</button>
+                                    <a class="btn btn-danger" href="index.php">Cancelar</a>
+                                </div>
+                            </form>
+                             <?php       
+                                if(isset($_POST['mesSueldo'])){  
+                                $objetoModificar = new Sueldo();    
+                                $objetoModificar->confirmarModificacion($_POST['idSueldo'],$_POST['diasTrabajados'],$_POST['basico'],$_POST['obraSocial'],
+                                                                                    $_POST['antiguedad'],$_POST['diasFeriados'],$_POST['feriadosTrabajados'],
+                                                                                    $_POST['feriadosNoTrabajados'],$_POST['fecha']); 
+                               }
                             ?>
                         </div>
-                    </div>
+                    </div>                   
                 </div>
             </div>
         </div>
