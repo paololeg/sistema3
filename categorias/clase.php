@@ -9,11 +9,25 @@
         public $buscar;
         public $categoria;
         public $idcategoria;
+        public $cantidadMostrar;
+        public $pagina;
+        public $cantidadTotalRegistros;
+        public $redondeoFinal;
+        public $consultaMostrar;
+        public $j;
 
         //metodos
         //metodo de mostrar categorias
-        public function mostrarCategorias() {
-            $this->consulta=$this->con->query("SELECT * FROM categorias ORDER BY nombreCategoria ASC");
+        public function mostrarCategorias($pag) {
+            $this->cantidadMostrar = 10;
+            $this->pagina = $pag;
+            $this->cantidadTotalRegistros = $this->con->query("SELECT * FROM categorias");
+            $this->redondeoFinal = ceil($this->cantidadTotalRegistros->num_rows/$this->cantidadMostrar);
+            
+            $this->consultaMostrar = "SELECT * FROM categorias ORDER BY idCategoria DESC LIMIT ".(($this->pagina-1)*$this->cantidadMostrar).",".$this->cantidadMostrar;
+            $this->consulta= $this->con->query($this->consultaMostrar);
+            
+            //$this->consulta=$this->con->query("SELECT * FROM categorias ORDER BY nombreCategoria ASC");
             $this->i=1;
             while($this->datos= $this->consulta->fetch_array()) {
                 ?>
@@ -30,6 +44,29 @@
               <?php  
                 $this->i++;
             }
+            ?>
+                <tr>
+                    <td colspan="12" class="text-center">
+                        <nav>
+                            <ul class="pagination">
+                                <li <?php if($this->pagina==1) {echo "class='disabled'";} ?> ><a href="index.php?pagina=1"><i class="material-icons">chevron_left</i></a></li>
+                                <?php 
+                                    for($this->j=1; $this->j<= $this->redondeoFinal; $this->j++) {
+                                    ?>
+                                        <li <?php if($this->pagina== $this->j){echo "class='active'";} ?>>
+                                            <a class="waves-effect" href="index.php?pagina=<?php echo $this->j; ?>"><?php echo $this->j; ?></a>
+                                        </li>
+                                    <?php
+                                    }                                    
+                                ?>
+                                <li <?php if($this->pagina==($this->j-1)) {echo "class='disabled'";} ?> >
+                                    <a href="index.php?<?php echo $this->j-1 ;?>"><i class="material-icons">chevron_right</i></a>
+                                </li>       
+                            </ul>
+                        </nav>
+                    </td>
+                </tr>  
+            <?php
             $this->con->close();
         }
         // metodo de busqueda o filtro
@@ -80,7 +117,7 @@
             }
             else { 
                 $this->consulta=$this->con->query("INSERT INTO categorias (nombreCategoria) VALUE ('$this->categoria')");
-            echo "<script>alert('Categoría registrada');window.location.href='index.php';</script>";
+            echo "<script>alert('Categoría registrada');window.location.href='index.php?pagina=1';</script>";
             $this->con->close();        
             }
         }
@@ -110,7 +147,7 @@
                        
             $this->consulta = $this->con->query("UPDATE categorias SET nombreCategoria='$this->categoria' WHERE idCategoria='$this->idcategoria'");
              
-            echo "<script>alert('Categoria Modificada');window.location.href='index.php'</script>";
+            echo "<script>alert('Categoria Modificada');window.location.href='index.php?pagina=1'</script>";
             $this->con->close();
         }
         // metodo eliminar usuario

@@ -1,10 +1,11 @@
-    <section>
+  
+<section>
         <!-- Left Sidebar -->
         <aside id="leftsidebar" class="sidebar">
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="../images/user.png" width="48" height="48" alt="User" />
+                    <img src="fotos/<?php echo $_SESSION['idusu'];?>" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['usu'] ?></div>
@@ -41,24 +42,24 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="../egresos/index.php">Egresos</a>
+                                <a href="../egresos/index.php?pagina=1">Egresos</a>
                             </li>                                    
                         </ul>
                     </li>
                     <li <?php if ($pagina==2) {echo 'class="active"';}?>>
-                        <a href="../usuarios">
+                        <a href="../usuarios/index.php?pagina=1">
                             <i class="material-icons">supervisor_account</i>
                             <span>Usuarios</span>
                         </a>
                     </li>
                     <li <?php if ($pagina==3) {echo 'class="active"';}?> >
-                        <a href="../categorias">
+                        <a href="../categorias/index.php?pagina=1">
                             <i class="material-icons">label</i>
                             <span>Categorías</span>
                         </a>
                     </li>
                     <li <?php if ($pagina==4) {echo 'class="active"';}?> >
-                        <a href="../productos">
+                        <a href="../productos/index.php?pagina=1">
                             <i class="material-icons">shop</i>
                             <span>Productos</span>
                         </a>
@@ -70,7 +71,7 @@
                         </a>
                     </li>
                     <li <?php if ($pagina==6) {echo 'class="active"';}?> >
-                         <a href="../facturas">
+                         <a href="../facturas/index.php?pagina=1">
                             <i class="material-icons">receipt</i>
                             <span>Facturas</span>
                         </a>
@@ -92,11 +93,6 @@
                             <i class="material-icons">monetization_on</i>
                             <span>Sueldos</span>
                         </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="../egresos/index.php">Egresos</a>
-                            </li>                                    
-                        </ul>
                     </li>
                     <li>
                         <a href="../pages/typography.html">

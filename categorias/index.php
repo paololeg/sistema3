@@ -56,7 +56,7 @@
                                         if(isset($_GET['buscar'])){
                                             $objetoMostrar->filtro($_GET['buscar']);
                                         }else{                                            
-                                            $objetoMostrar->mostrarCategorias();
+                                            $objetoMostrar->mostrarCategorias($_GET['pagina']);
                                         }                                        
                                     ?>                                                                    
                                 </tbody>

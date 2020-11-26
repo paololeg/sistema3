@@ -71,7 +71,7 @@
                                         if(isset($_GET['buscar'])){
                                             $objetoMostrar->filtro($_GET['buscar'],$_GET['tipo']);
                                         }else{                                            
-                                            $objetoMostrar->mostrarProductos();
+                                            $objetoMostrar->mostrarProductos($_GET['pagina']);
                                         }                                        
                                     ?>                                                                    
                                 </tbody>

@@ -31,24 +31,24 @@
                             <h2>
                                 <form action="index.php" method="GET">
                                     <div class="col-sm-3"> 
-                                        <input type="text" class="form-control col-sm-3" name="buscar" placeholder="INGRESAR DATO">
+                                        <input type="text" class="form-control col-sm-3" name="buscar" placeholder="INGRESAR DATO" required="" >
                                     </div>
                                     <div class="col-sm-3">   
                                         <select class="form-control" name="tipo">
                                             <option value="dni">DNI</option>
                                             <option value="apellido">Apellido</option>
-                                            <option value="telefono">Teléfono</option>
-                                            <option value="clientes">Clientes</option>
-                                            <option value="vendedores">Vendedores</option>
-                                            <option value="proveedores">Proveedores</option>
-                                            <option value="administradores">Administradores</option>   
+                                            <option value="telefono">Teléfono</option> 
                                         </select>
                                     </div>    
                                     <div class="col-sm-2">
                                         <button class="btn btn-success" type="submit">Buscar</button>
                                     </div>
+                                    <div class="col-sm-2">
+                                        <a class="btn btn-primary" href="index.php?pagina=1">Atrás</a>
+                                    </div>
                                 </form>
                                     <a href="formnuevo.php" class="btn btn-primary  float-left">Nuevo Registro</a> 
+                                    <br>                                       
                             </h2>                           
                         </div>
                         <div class="body table-responsive">
@@ -75,7 +75,7 @@
                                         if(isset($_GET['buscar'])){
                                             $objetoMostrar->filtro($_GET['buscar'],$_GET['tipo']);
                                         }else{                                            
-                                            $objetoMostrar->mostrarUsuarios();
+                                            $objetoMostrar->mostrarUsuarios($_GET['pagina']);
                                         }
                                         
                                     ?>                                                                    

@@ -52,7 +52,7 @@
                                         if(isset($_GET['buscar'])){
                                             $objetoMostrar->filtro($_GET['buscar'],$_GET['tipo']);
                                         }else{                                            
-                                            $objetoMostrar->mostrarFacturas();
+                                            $objetoMostrar->mostrarFacturas($_GET['pagina']);
                                         }                                        
                                     ?>                                                                    
                                 </tbody>
