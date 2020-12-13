@@ -9,11 +9,10 @@
     
     $pdf = new Dompdf();
     $pdf->loadHtml($html);
+    // portrait es orientación vertical y landscape es horizontal
     $pdf->setPaper("A4","portrait");
     $pdf->render();
-    $pdf->stream();
-    
-    
+    $pdf->stream();        
 
 ?>
 

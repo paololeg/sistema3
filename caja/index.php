@@ -1,4 +1,5 @@
 <?php include '../config/sesion.php';
+      include 'clase.php';
     $pagina=8;
 ?>
 <!DOCTYPE html>
@@ -32,7 +33,16 @@
                             <form id="formnuevo" action="index.php" method="GET">
                                 <div class="form-group">
                                     <label for="importeCaja">Saldo Inicial</label>
-                                    <input type="number" class="form-control" id="importeCaja" name="importeCaja" required="">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="importeCaja" 
+                                        name="importeCaja" 
+                                        readonly="" 
+                                        value="<?php
+                                             $objetoDineroInicial= new Caja();
+                                             $objetoDineroInicial->dineroInicial();
+                                        ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="ventas">Ingresos por Ventas</label>

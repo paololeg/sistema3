@@ -31,6 +31,7 @@
         public $redondeoFinal;
         public $consultaMostrar;
         public $j;
+        public $busqueda;
 
         //metodos
         //metodo de mostrar usuarios
@@ -338,7 +339,10 @@
                                                                     telefono='$this->telefono', sexo='$this->sexo',
                                                                     privilegio='$this->privilegio',edad='$this->edad'
                                                 WHERE idUsuario ='$this->idusuario'");
-            $_SESSION['usu']=$this->apellido.", ".$this->nombre; 
+            if($_SESSION['idusu']== $this->idusuario){
+                 $_SESSION['usu']=$this->apellido.", ".$this->nombre;
+            }            
+            
             echo "<script>alert('Usuario Modificado');window.location.href='index.php?pagina=1'</script>";
             $this->con->close();
         }
@@ -375,6 +379,45 @@
             }else{
                 echo "<script>alert('La clave actual es incorrecta')</script>";
             }
+        }
+        //metodos para procesar la busqueda de ajax
+        public function resultados($bus){
+            $this->busqueda=$bus;
+            $this->consulta= $this->con->query("SELECT * FROM usuarios WHERE apellido like '%$this->busqueda%'");
+            if($this->busqueda==''){
+                
+            }else{
+                
+            
+            ?>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr class="bg-blue">
+                            <th>APELLIDO Y NOMBRE</th>
+                            <th>DNI</th>
+                            <th>EDAD</th>
+                            <th>DIRECCIÓN</th>
+                            <th>CONTACTO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            while($this->datos= $this->consulta->fetch_array()){
+                               ?>
+                                <tr>
+                                    <td><?php echo $this->datos['apellido'].', '.$this->datos['nombre'] ?></td>
+                                    <td><?php echo $this->datos['dni']?></td>
+                                    <td><?php echo $this->datos['edad'] ?></td>
+                                    <td><?php echo $this->datos['domicilio'] ?></td>
+                                    <td><?php echo $this->datos['email']?></td>
+                                </tr>
+                                <?php
+                            }
+                        ?>
+                    </tbody>
+                </table> 
+            <?php            
+            }            
         }
          
     }

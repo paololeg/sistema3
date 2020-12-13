@@ -22,7 +22,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">   
-                <h3>Nuevo Movimiento - <?php echo $_GET['proveedor']?></h3>
+                <h3>Nuevo Movimiento </h3>
                 <hr>
                 <form action="formnuevo.php" method="POST" id="formnuevo"> 
                     <input type="hidden" name="idUsuario" value="<?php echo $_GET['idUsuario']?>">

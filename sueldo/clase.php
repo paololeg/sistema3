@@ -346,6 +346,8 @@
                         </tr>
                     </table>
                    <?php
+                   //
+                   $this->con->query("UPDATE sueldo SET netoSueldo='$this->netoSueldo' WHERE idSueldo=$this->idSueldo");
                 }
                 
             }    

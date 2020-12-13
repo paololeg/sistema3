@@ -5,7 +5,7 @@
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="fotos/<?php echo $_SESSION['idusu'];?>" width="48" height="48" alt="User" />
+                    <img src="../usuarios/fotos/<?php echo $_SESSION['idusu'];?>" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['usu'] ?></div>
