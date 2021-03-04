@@ -94,6 +94,12 @@
                             <span>Sueldos</span>
                         </a>
                     </li>
+                    <li <?php if ($pagina==11) {echo 'class="active"';}?> >
+                        <a href="../operaciones/index.php">
+                            <i class="material-icons">add_shopping_cart</i>
+                            <span>Operaciones</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="../pages/typography.html">
                             <i class="material-icons">text_fields</i>
