@@ -41,7 +41,6 @@
                                     </div>
                                 </form>
                                 <a class="btn btn-success"  href="iniciaroperacion.php">Nueva Operación</a>
-                                 <hr>
                             </div>                           
                         </div>
                         <div class="body table-responsive">
@@ -59,7 +58,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <h1>aquí mostrar las 10 últimas operaciones</h1>
                                     <?php 
                                         $objetoMostrarOperaciones = new operaciones();
                                         $objetoMostrarOperaciones->mostrarOperaciones();

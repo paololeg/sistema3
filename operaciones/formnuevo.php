@@ -34,78 +34,66 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                            <div>                                
-                                <form action="formnuevo.php" method="POST">
-                                    <div class="col-sm-3"> 
-                                        <input type="hidden" name="idOperacion" value="<?php echo $_GET['idOperacion']; ?>">
-                                        <input type="text" class="form-control col-sm-3" name="buscar" placeholder="Ingresar código de servicio" autofocus="autofocus" required="">                                        
-                                        <input type="hidden" name="idRegistrante" value="<?php echo $_SESSION['idusu']; ?>">      
-                                    </div>                                      
-                                    <div class="col-sm-2">
-                                        <button class="btn btn-primary" type="submit">Buscar</button>
+                            
+                            <br>
+                            <form class="form-horizontal" action="formnuevo.php" method="POST">  
+                                <input type="hidden" name="idOperacion" value="<?php echo $_GET['idOperacion']; ?>">                                    
+                                <input type="hidden" name="idRegistrante" value="<?php echo $_SESSION['idusu']; ?>">    
+                                <div class="row clearfix">
+                                    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8 p-r-5">
+                                        <label>Cliente</label>
+                                        <select name="idCliente">
+                                            <option value="">Seleccione cliente</option> 
+                                            <?php                                      
+                                             $objetoOption = new operaciones();
+                                             $objetoOption->selectCliente();
+                                            ?>
+                                        </select>
                                     </div>
-                                </form> 
-                                <div class="row">
-                                    <select class="col-lg-4">
-                                         <option value="">--Cliente--</option> 
-                                        <?php                                      
-                                         $objetoOption = new operaciones();
-                                         $objetoOption->selectCliente();
-                                        ?>
-                                    </select> 
-                                    <a class="btn btn-primary m-l-15"  href="nuevaoperacion.php">Guardar</a>
+                                    <div class="col-lg-3 col-md-3 col-sm-8 col-xs-8">
+                                        <label for="salida">Salida</label>
+                                        <input type="date" name="salida" class="text-center" required="">
+                                    </div> 
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        <label for="regreso">Regreso</label>
+                                        <input type="date" name="regreso" class="text-center" required="">  
+                                    </div>
                                 </div>
                                 <br>
-                                <div class="form-horizontal p-l-5">                                   
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                            <label for="pax">Cantidad Pax</label>
-                                        </div>
-                                        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="number" id="pax" class="form-control" required="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                            <label for="descripcion">Descripción</label>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-8 col-xs-8">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input type="text" id="descripcion" class="form-control">
-                                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label" style="padding-left: 0 auto">
+                                        <label class="p-l-0" for="pax">Cantidad Pax</label>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="number" name="cantidadPax" class="form-control" value="1" min="1" pattern="^[0-9]+" required="">
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
-                                <hr> 
-                            </div>                           
-                        </div>
-                        <div class="body table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Producto</th> 
-                                        <th>Cantidad</th> 
-                                        <th>Venta Unitaria</th> 
-                                        <th>Costo Unitario</th>
-                                        <th>Subtotal Venta</th>  
-                                        <th>Subtotal Costo</th>  
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                        if(isset($_GET['idOperacion'])){
-                                            $objetoMostrarDetalles = new operaciones();
-                                            $objetoMostrarDetalles->mostrarDetalles($_GET['idOperacion']);
-                                        }                                         
-                                    ?>                                                                     
-                                </tbody>
-                            </table>
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label ">
+                                        <label for="descripcion">Descripción</label>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-8 col-xs-8">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="descripcion" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-8 col-xs-8">
+                                        <button class="btn btn-primary" type="submit">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>   
+                            <?php
+                                
+                                $objetoNuevaOperacion = new operaciones();
+                                if(isset ($_POST['idCliente'])){
+                                    $objetoNuevaOperacion->guardar($_POST['idOperacion'],$_POST['idRegistrante'],$_POST['idCliente'],$_POST['salida'],
+                                            $_POST['regreso'],$_POST['cantidadPax'], $_POST['descripcion']);   
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -116,7 +104,7 @@
     
     <!-- ARCHIVOS JS -->
     <?php include '../config/js.php'; ?>
-    <!-- FIN ARCHIVOS JS -->
+    <!-- FIN ARCHIVOS JS -->  
 </body>
 
 </html>

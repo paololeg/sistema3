@@ -36,11 +36,14 @@
                         </a>
                     </li>
                     <li <?php if ($pagina==8) {echo 'class="active"';}?> >
-                        <a href="../caja/index.php">
+                        <a href="../caja/ultimacaja.php">
                             <i class="material-icons">monetization_on</i>
                             <span>Caja</span>
                         </a>
                         <ul class="ml-menu">
+                            <li>
+                                <a href="../ingresos/index.php?pagina=1">Ingresos</a>
+                            </li> 
                             <li>
                                 <a href="../egresos/index.php?pagina=1">Egresos</a>
                             </li>                                    
