@@ -2,6 +2,9 @@
     include '../config/sesion.php';
     $pagina=11;
     include 'clase.php';
+    if($_SESSION['rol']==3) {
+        header('location:../acceso/plantilla.php');   
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,7 +12,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php include '../config/loader.php'; ?>
     <!-- Fin Loader -->

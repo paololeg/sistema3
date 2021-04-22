@@ -7,7 +7,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php// include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="form-group">                                
                                     <button class="btn btn-primary" type="submit">Registrar</button>
-                                    <a class="btn btn-danger" href="index.php">Cancelar</a>
+                                    <a class="btn btn-danger" href="ultimacaja.php">Cancelar</a>
                                 </div>
                             </form> 
                             <?php
@@ -56,6 +56,7 @@
     
     <!-- ARCHIVOS JS -->
     <?php include '../config/js.php'; ?>
+  
     <!-- FIN ARCHIVOS JS -->
 </body>
 

@@ -9,9 +9,9 @@
     <?php include '../config/head.php'; ?>
     <link href="../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
-    <?php// include '../config/loader.php'; ?>
+    <?php include '../config/loader.php'; ?>
     <!-- Fin Loader -->
     <!-- Menu Superior -->
     <?php include '../config/menusuperior.php'; ?>
@@ -26,20 +26,28 @@
             <div class="block-header">   
                 <h3>Modificar Ingreso</h3>
                 
-                    <input type="text" name="idIngreso" value="<?php echo $_GET['idIngreso']?>">
                 <hr>
                 <form action="formmodificaringreso.php" method="POST" id="formmodificar"> 
+                    <input type="hidden" name="idIngreso" value="<?php echo $_GET['idIngreso']?>">
                     <?php
                         
                         if(isset($_GET['idIngreso'])){
                            $objetoMostrar = new Caja();
-                           $objetoMostrar->mostrarIngresos($_GET['idIngreso']); 
+                           $objetoMostrar->modificarIngreso($_GET['idIngreso']); 
                         }                       
                                         
                     ?>
                     <button id="guardar" type="submit" class="btn btn-primary">Modificar</button>
                     <a href="ultimacaja.php" class="btn btn-danger">Cancelar</a>                    
                 </form>
+                <?php
+                    if(isset($_POST['importeIngreso'])){
+                        $objetoModificar = new Caja();
+                        $objetoModificar->confirmarModificacionIngreso($_POST['idIngreso'],$_POST['tipoIngreso'],
+                                $_POST['importeIngreso'],$_POST['numeroComprobante'],$_POST['descripcionIngreso']
+                                ,$_POST['moneda'],$_POST['idOperacion'],$_POST['tipoValor']);
+                    }
+                ?>
                
             </div>
         </div>

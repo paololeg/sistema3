@@ -7,7 +7,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php // include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -148,7 +148,7 @@
                     
                     $ubicaciontemporal = $_FILES['foto'] ['tmp_name'];
                     if(move_uploaded_file($ubicaciontemporal,'fotos/'.$_POST['dni'])){
-                       echo "<script>alert('Usuario Registrado');window.location.href='index.php?pagina=1';</script>"; 
+                      echo "<script>alert('Usuario Registrado');window.location.href='index.php?pagina=1';</script>"; 
                     }    
                 }
                 ?>

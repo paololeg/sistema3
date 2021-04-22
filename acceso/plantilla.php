@@ -51,7 +51,7 @@
             </div>
             <!-- Counter Examples -->
             <div class="row clearfix">
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" <?php if($_SESSION['rol']==3) { echo 'style="display:none;"';} ?>>
                     <div class="info-box">
                         <div class="icon bg-red">
                             <i class="material-icons">shopping_cart</i>
@@ -71,13 +71,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" <?php if($_SESSION['rol']==3) { echo 'style="display:none;"';} ?>>
                     <div class="info-box">
                         <div class="icon bg-orange">
                             <span class="chart chart-line">9,4,6,5,6,4,7,3</span>
                         </div>
                         <div class="content">
-                            <div class="text">TOTAL VENTAS MES</div>
+                            <div class="text">TOTAL VENTAS</div>
                             <div class="number count-to" 
                                  data-from="0" 
                                  data-to="<?php 
@@ -93,62 +93,35 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <div class="icon bg-purple">
-                            <i class="material-icons">bookmark</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">PRÓXIMAS SALIDAS</div>
-                            <div class="number count-to" data-from="0" data-to="117" data-speed="1000" data-fresh-interval="20"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box hover-zoom-effect">
-                        <div class="icon bg-cyan">
-                            <i class="material-icons">gps_fixed</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">DESTINOS MÁS VENDIDOS</div>
-                            <div class="number"></div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <!-- #END# Counter Examples -->
             <!-- Hover Zoom Effect -->            
             <div class="row clearfix">
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" <?php if($_SESSION['rol']==6) { echo 'style="display:none;"';} ?>>
                     <div class="info-box hover-expand-effect">
                         <div class="icon bg-teal">
                             <i class="material-icons">equalizer</i>
                         </div>
-                        <div class="content">
+                        <div class="content" >
                             <div class="text">TOTAL COBRADO</div>
-                            <div class="number">$125 543</div>
+                            <div class="number">$<?php 
+                                                $objetoMostrarIngresos = new dashboard();     
+                                                $objetoMostrarIngresos->totalingresos();
+                                            ?></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"  <?php if($_SESSION['rol']==6) { echo 'style="display:none;"';} ?>>
                     <div class="info-box hover-expand-effect">
                         <div class="icon bg-green">
                             <i class="material-icons">equalizer</i>
                         </div>
                         <div class="content">
                             <div class="text">TOTAL PAGADO</div>
-                            <div class="number">$125 543</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <div class="info-box hover-zoom-effect">
-                        <div class="icon bg-light-blue">
-                            <i class="material-icons">access_alarm</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">PRÓXIMOS VENCIMIENTOS</div>
-                            <div class="number"></div>
+                            <div class="number">$<?php 
+                                                $objetoMostrarEgresos = new dashboard();     
+                                                $objetoMostrarEgresos->totalegresos();
+                                            ?></div>
                         </div>
                     </div>
                 </div>
@@ -161,29 +134,23 @@
         <section class="content" style="margin-top: 0px">
         <div class="container-fluid">           
             <div class="row clearfix">
-                <!-- Line Chart -->
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>VENTAS POR DESTINO</h2>
-                        </div>
-                        <div class="body">
-                            <canvas id="line_chart" height="130"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <!-- #END# Line Chart -->
                 <!-- Bar Chart -->
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                            <h2>VENTAS POR MES</h2>
+                            <div class="col-lg-9">
+                                <h2>VENTAS POR DESTINO</h2>
+                            </div>
+                            <div class="col-lg-3">
+                                <button class="btn btn-primary" onclick="cargarDatosGraficoBar()">Mostrar</button>
+                            </div>  
                         </div>
                         <div class="body">
-                            <canvas id="bar_chart" height="130"></canvas>
+                            <canvas id="myChart" width="200" height="80"  ></canvas>
                         </div>
                     </div>
                 </div>
+                
                 <!-- #END# Bar Chart -->
             </div> 
         </div>
@@ -197,6 +164,68 @@
         function cargar_contenido(contenedor,contenido){
             $("#"+contenedor).load(contenido);
         }
+    </script>
+    <script>
+       
+        function cargarDatosGraficoBar(){
+            $.ajax({
+                url:'controladorgrafico.php',
+                type:'POST'
+            }).done(function(resp){
+                var titulo = [];
+                var cantidad = [];
+                var data = JSON.parse(resp);
+                for(var i=0;i<data.length;i++){
+                   titulo.push(data[i][1]);
+                   cantidad.push(data[i][0]);
+                } 
+                var ctx = document.getElementById('myChart')
+                var myChart = new Chart(ctx,{
+                    type: 'bar',
+                    data: {
+                        labels: titulo,
+                        datasets: [{
+                            label: "Cantidad de pax",
+                            data: cantidad,
+                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(153, 102, 255, 0.2)',
+                                                'rgba(255, 159, 64, 0.2)',
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(75, 192, 192, 0.2)',
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(153, 102, 255, 1)',
+                                                'rgba(255, 159, 64, 1)',
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(75, 192, 192, 1)',
+                                            ],
+                                            borderWidth: 1
+                                        
+                                    
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        legend: false
+                    }
+                })
+               
+                })
+            }
+       
+        
     </script>
     <!-- Jquery Core Js -->
     <script src="../plugins/jquery/jquery.min.js"></script>
@@ -224,9 +253,9 @@
 
 
     <!-- Custom Js -->
-    <script src="../js/admin.js"></script>    
+    <script  src="../js/admin.js"></script>    
     <script src="../js/pages/widgets/infobox/infobox-1.js"></script>
-    <script src="../js/pages/charts/chartjs.js"></script>
+    <!--<script src="../js/pages/charts/chartjs.js"></script> -->
 
     <!-- Demo Js -->
     <script src="../js/demo.js"></script>

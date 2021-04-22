@@ -9,7 +9,7 @@
     <table style="width: 100%; height: 100px" border="0">
         <tbody>
             <tr>
-                <input type="hidden" name="idEgreso" value="<?php echo $_GET['idEgreso']?>">
+                <input type="hidden" name="idIngreso" value="<?php echo $_GET['idIngreso']?>">
                 <td style="width: 30%; height:100px" rowspan="2"><img src="agenciaj.jpg"/></td>
                 <td style="width: 30%; text-align: center;"><strong>Agencia Viaja y Sueña</strong></td>
                 <td style="width: 30%; text-align: right;"><strong>San Martin 385</strong></td>
@@ -31,9 +31,9 @@
             </tr>
             <?php
                   include 'clase.php';
-                  if(!isset($_POST['descripcionEgreso'])){
-                      $objetoDatos = new egresos();
-                      $objetoDatos->datosImprimir($_GET['idEgreso']);                        
+                  if(!isset($_POST['descripcionIngreso'])){
+                      $objetoDatos = new Caja();
+                      $objetoDatos->datosImprimir($_GET['idIngreso']);                        
                   }  
             ?>
         </tbody>

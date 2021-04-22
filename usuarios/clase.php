@@ -188,7 +188,7 @@
             else { 
             $this->consulta=$this->con->query("INSERT INTO usuarios (usuario,password,apellido,nombre,dni,email,nacimiento,
                 domicilio,localidad,provincia,nacionalidad,telefono,sexo,privilegio,fechaUsuario,idRegistrante) VALUES ('$this->usuario','$this->encriptado',
-                '$this->apellido','$this->nombre','$this->dni',$this->email','$this->nacimiento','$this->domicilio',
+                '$this->apellido','$this->nombre','$this->dni','$this->email','$this->nacimiento','$this->domicilio',
                 '$this->localidad','$this->provincia','$this->nacionalidad','$this->telefono','$this->sexo','$this->privilegio',NOW(),'$this->idregistrante')");
                 //echo "<script>alert('Usuario Registrado');window.location.href='index.php?pagina=1';</script>";
             $this->con->close();

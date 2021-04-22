@@ -9,7 +9,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php //include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -24,13 +24,18 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
+                <div class="body">
+                    <div id="valreg" style="display: none" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                       <b>La fecha de regreso no puede ser menor que la fecha de salida</b>
+                    </div>
+                </div>
                 <h2>MODIFICAR OPERACIÓN</h2>
             </div>
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header">
-                            
+                        <div class="header"> 
                             <br>
                             <form class="form-horizontal" action="formmodificar.php" method="POST">  
                                 <input type="hidden" name="idOperacion" value="<?php echo $_GET['idOperacion']; ?>">                                
@@ -42,7 +47,15 @@
                                     }
                                 ?>
                                     <div class="col-lg-2 col-md-2 col-sm-8 col-xs-8">
-                                        <button class="btn-lg btn-primary" type="submit">Guardar</button>
+                                        <button class="btn-lg btn-primary" id="guardar" type="submit">Guardar</button>
+                                    </div>
+                                    <div>
+                                        <h2>
+                                            Saldo $ <?php
+                                                        $objetoMostrarSaldo= new operaciones();
+                                                        $objetoMostrarSaldo->mostrarSaldo($_GET['idOperacion']);
+                                                    ?>
+                                        </h2>
                                     </div>
                                 </div>
                             </form>
@@ -187,16 +200,34 @@
     
     <!-- ARCHIVOS JS -->
     <?php include '../config/js.php'; ?>
+    <script type="text/javascript">
+        function validarFecha(){
+            var salida=document.getElementById('salida').value;
+            var regreso=document.getElementById('regreso').value;          
+          
+            if(regreso < salida){
+                document.getElementById('valreg').style.display='block';
+                document.getElementById('guardar').style.display='none';
+            }
+             else{
+                document.getElementById('valreg').style.display='none';
+                document.getElementById('guardar').style.display='block';                
+            }
+           
+        }
+    </script>
     <script src="../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    
     <script src="../plugins/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="../plugins/jquery/jquery-3.6.0.min.js"></script>
         <!-- SweetAlert Plugin Js -->
-    <script src="../../plugins/sweetalert/sweetalert.min.js"></script>
-
+    <script src="../plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- Bootstrap Core Js -->
+    <script src="../plugins/bootstrap/js/bootstrap.js"></script>
     <!-- Custom Js -->
-    <script src="../../js/admin.js"></script>
-    <script src="../../js/pages/ui/dialogs.js"></script>
-    
+    <script src="../js/admin.js"></script>
+    <script src="../js/pages/ui/dialogs.js"></script>
+    <script src="../js/demo.js"></script>
     <!-- FIN ARCHIVOS JS -->  
 </body>
 

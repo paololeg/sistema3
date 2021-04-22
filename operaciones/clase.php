@@ -102,7 +102,7 @@
                 //$this->i=1;
                 //$this->totalVenta=0;
                 //$this->totalCosto=0;
-                while ($this->datos = $this->consulta -> fetch_array()) {
+                while ($this->datos = $this->consulta ->fetch_array()) {
                     ?>
                     <tr>
                         <td><?php echo $this->datos['idOperacion']; ?></td>
@@ -111,7 +111,7 @@
                         <td><?php echo $this->datos['salida']; ?></td>
                         <td>$<?php echo $this->datos['venta']; ?></td>
                         <td>$<?php echo $this->datos['costo']; ?></td>
-                        <td><?php echo $this->datos=$this->datos['estado']; ?></td>
+                        <td><?php echo $this->datos['estado']; ?></td>
                         <td>
                             <div class="row">
                                 <a class="btn btn-success btn-sm" href="formmodificar.php?idOperacion=<?php echo $this->datos['idOperacion']; ?>"><i class="material-icons">create</i></a>
@@ -240,11 +240,11 @@
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-8 col-xs-8">
                         <label for="salida">Salida</label>
-                        <input type="date" name="salida" class="text-center" value="<?php echo $this->datos['salida'];?>" required="" >
+                        <input type="date" id="salida" name="salida" class="text-center" value="<?php echo $this->datos['salida'];?>" onchange="validarFecha()" required="" >
                     </div> 
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <label for="regreso">Regreso</label>
-                        <input type="date" name="regreso" class="text-center"value="<?php echo $this->datos['regreso'];?>" required="">  
+                        <input type="date" id="regreso" name="regreso" class="text-center"value="<?php echo $this->datos['regreso'];?>" onchange="validarFecha()" required="">  
                     </div>
                 </div>
                 <br>
@@ -430,6 +430,26 @@
                 <?php   
             }
             
+        }
+        // metodo para mostrar saldo de operacion
+        public $acumPago;
+        public $saldoOperacion;
+        public function mostrarSaldo($id){
+            $this->idOperacion = $id;
+            $this->acumPago = 0;
+            
+            $this->consulta= $this->con->query("SELECT importeIngreso FROM ingresos WHERE idOperacion='$this->idOperacion'")  ;
+            
+            while ($this->datos = $this->consulta->fetch_array()) {
+             $this->acumPago += $this->datos['importeIngreso'];
+                
+            }
+            $this->consulta2= $this->con->query("SELECT venta FROM operaciones WHERE idOperacion = '$this->idOperacion'");
+            $this->datos2 = $this->consulta2->fetch_array();
+            $this->saldoOperacion = $this->datos2['venta'] - $this->acumPago;
+                
+                            
+            echo $this->saldoOperacion;
         }
     }
 

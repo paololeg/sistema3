@@ -13,7 +13,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php //include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -28,6 +28,12 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
+                <div class="body">
+                    <div id="valreg" style="display: none" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                       <b>La fecha de regreso no puede ser menor que la fecha de salida</b>
+                    </div>
+                </div>
                 <h2>NUEVA OPERACIÓN</h2>
             </div>
             <div class="row clearfix">
@@ -52,11 +58,12 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-8 col-xs-8">
                                         <label for="salida">Salida</label>
-                                        <input type="date" name="salida" class="text-center" required="">
+                                        <input type="date" id="salida" name="salida" class="text-center" onchange="validarFecha()" required="" >
                                     </div> 
+                                         
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                         <label for="regreso">Regreso</label>
-                                        <input type="date" name="regreso" class="text-center" required="">  
+                                        <input type="date" id="regreso" name="regreso" class="text-center" onchange="validarFecha()" required="">  
                                     </div>
                                 </div>
                                 <br>
@@ -82,7 +89,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-8 col-xs-8">
-                                        <button class="btn btn-primary" type="submit">Guardar</button>
+                                        <button id="guardar" class="btn btn-primary" type="submit">Guardar</button>
                                     </div>
                                 </div>
                             </form>   
@@ -103,7 +110,35 @@
     <!-- Fin Entorno de Trabajo -->
     
     <!-- ARCHIVOS JS -->
+    <script type="text/javascript">
+        function validarFecha(){
+            var salida=document.getElementById('salida').value;
+            var regreso=document.getElementById('regreso').value;          
+          
+            if(regreso < salida){
+                document.getElementById('valreg').style.display='block';
+                document.getElementById('guardar').style.display='none';
+            }
+             else{
+                document.getElementById('valreg').style.display='none';
+                document.getElementById('guardar').style.display='block';                
+            }
+           
+        }
+    </script>
     <?php include '../config/js.php'; ?>
+    <!-- Jquery Core Js -->
+    <script src="../plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="../plugins/bootstrap/js/bootstrap.js"></script>
+
+
+    <!-- Custom Js -->
+    <script src="../js/admin.js"></script>
+    <script src="../js/pages/ui/dialogs.js"></script>
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
     <!-- FIN ARCHIVOS JS -->  
 </body>
 

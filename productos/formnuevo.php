@@ -7,7 +7,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
   
     <!-- Fin Loader -->
@@ -67,7 +67,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                             <label for="foto">Imagen</label>
-                            <input type="file" class="form-control" name="foto" id="foto" required="">
+                            <input type="file" class="form-control" name="foto" id="foto">
                             </div>
                         </div>
                     </div>

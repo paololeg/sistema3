@@ -9,9 +9,9 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-teal">
+<body class="theme-blue">
     <!-- Loader -->
-    <?php include '../config/loader.php'; ?>
+    <?php // include '../config/loader.php'; ?>
     <!-- Fin Loader -->
     <!-- Menu Superior -->
     <?php include '../config/menusuperior.php'; ?>
@@ -29,22 +29,7 @@
                         <div class="body">
                             <h1 class="bg-primary">INFORMES ESTADISTICOS</h1>
                             
-                            <div class="card bg-purple" style="width: 300px; display: inline-table;">
-                                <div class="header text-center">
-                                    <h2>Cantidad de Usuarios</h2>
-                                </div>
-                                <div class="body">
-                                    <h3 class="col-white text-center">
-                                        <?php
-                                        $objetoCantidadUsuarios = new informes();
-                                        $objetoCantidadUsuarios->totalusuarios();
-                                        ?>
-                                    </h3>
-                                </div>
-                                <div class="footer">
-                                    <a class="btn btn-success btn-block" href="resultados.php?informe=1">Ver Resultados</a>
-                                </div>
-                            </div>
+                            
                             
                             <div class="card bg-brown" style="width: 300px; display: inline-table;">
                                 <div class="header text-center">
@@ -53,7 +38,7 @@
                                 <div class="body">
                                     <h3 class="col-white text-center">
                                         <?php
-                                        $objetoCantidadProductos = new informes();
+                                        $objetoCantidadProductos = new dashboard();
                                         $objetoCantidadProductos->totalproductos();
                                         ?>
                                     </h3>
@@ -70,7 +55,7 @@
                                 <div class="body">
                                     <h3 class="col-white text-center">
                                          <?php
-                                        $objetoCantidadVentas = new informes();
+                                        $objetoCantidadVentas = new dashboard();
                                         $objetoCantidadVentas->totalventas();
                                         ?>
                                     </h3>
@@ -87,7 +72,7 @@
                                 <div class="body">
                                     <h3 class="col-white text-center">
                                          <?php
-                                        $objetoCantidadProductosA = new informes();
+                                        $objetoCantidadProductosA = new dashboard();
                                         $objetoCantidadProductosA->totalproductosagotados();
                                         ?>
                                     </h3>
@@ -104,7 +89,7 @@
                                 <div class="body">
                                     <h3 class="col-white text-center">
                                          <?php
-                                        $objetoCantidadProductosM = new informes();
+                                        $objetoCantidadProductosM = new dashboard();
                                         $objetoCantidadProductosM->totalproductosminimo();
                                         ?>
                                     </h3>

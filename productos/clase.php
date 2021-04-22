@@ -245,7 +245,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                             <label for="foto">Imagen</label>
-                            <input type="file" class="form-control" name="foto" id="foto" required="">
+                            <input type="file" class="form-control" name="foto" id="foto" >
                             </div>
                         </div>
                     </div>
@@ -283,6 +283,7 @@
                                                                     precioVenta='$this->precioVenta', precioCompra='$this->precioCompra', idCategoria='$this->idCategoria'
                                                 WHERE idProducto ='$this->idProducto'");
             $this->con->close();
+             echo "<script>alert('Producto modificado');window.location.href='index.php?pagina=1'</script>";
         }
         // metodo eliminar usuario
         public function eliminarProducto($id){

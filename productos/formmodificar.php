@@ -8,7 +8,7 @@
     <?php include '../config/head.php'; ?>
     <link href="../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php include '../config/loader.php'; ?>
     <!-- Fin Loader -->

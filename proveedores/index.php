@@ -7,7 +7,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php //include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -44,7 +44,7 @@
                                         <button class="btn btn-success" type="submit">Buscar</button>
                                     </div>
                                 </form>
-                                    <a href="formnuevo.php" class="btn btn-primary  float-left">Nuevo Registro</a>
+                                    <a href="formnuevo.php" class="btn btn-primary   float-left">Nuevo Registro</a>
                             </h2>                           
                         </div>
                         <div class="body table-responsive">
