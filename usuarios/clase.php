@@ -25,16 +25,34 @@
         public $privilegio;
         public $edad;
         public $idregistrante;
+        public $cantidadMostrar;
+        public $pagina;
+        public $cantidadTotalRegistros;
+        public $redondeoFinal;
+        public $consultaMostrar;
+        public $j;
+        public $busqueda;
 
         //metodos
         //metodo de mostrar usuarios
-        public function mostrarUsuarios() {
-            $this->consulta=$this->con->query("SELECT * FROM usuarios ORDER BY apellido ASC, nombre ASC");
+        public function mostrarUsuarios($pag) {
+            $this->cantidadMostrar = 10;
+            $this->pagina = $pag;
+            $this->cantidadTotalRegistros = $this->con->query("SELECT * FROM usuarios");
+            $this->redondeoFinal = ceil($this->cantidadTotalRegistros->num_rows/$this->cantidadMostrar);
+            
+            $this->consultaMostrar = "SELECT * FROM usuarios ORDER BY idUsuario DESC LIMIT ".(($this->pagina-1)*$this->cantidadMostrar).",".$this->cantidadMostrar;
+            $this->consulta= $this->con->query($this->consultaMostrar);
+            
+            //$this->consulta=$this->con->query("SELECT * FROM usuarios ORDER BY apellido ASC, nombre ASC");
             $this->i=1;
             while($this->datos= $this->consulta->fetch_array()) {
                 ?>
                     <tr>
-                        <td><?php echo $this->i;?></td>
+                        <td>
+                            <b><?php echo $this->i;?></b>
+                            <img src="fotos/<?php echo $this->datos['idUsuario'];?>" width="50px">                            
+                        </td>
                         <td><?php echo $this->datos['apellido'].", ".$this->datos['nombre'];?></td>
                         <td><?php echo $this->datos['usuario'];?></td>
                         <td><?php echo $this->datos['dni'];?></td>
@@ -52,42 +70,54 @@
                         </td>
                     </tr> 
               <?php  
-                $this->i++;
+                $this->i++;              
+                   
             }
+            ?>
+                <tr>
+                    <td colspan="12" class="text-center">
+                        <nav>
+                            <ul class="pagination">
+                                <li <?php if($this->pagina==1) {echo "class='disabled'";} ?> ><a href="index.php?pagina=1"><i class="material-icons">chevron_left</i></a></li>
+                                <?php 
+                                    for($this->j=1; $this->j<= $this->redondeoFinal; $this->j++) {
+                                    ?>
+                                        <li <?php if($this->pagina== $this->j){echo "class='active'";} ?>>
+                                            <a class="waves-effect" href="index.php?pagina=<?php echo $this->j; ?>"><?php echo $this->j; ?></a>
+                                        </li>
+                                    <?php
+                                    }                                    
+                                ?>
+                                <li <?php if($this->pagina==($this->j-1)) {echo "class='disabled'";} ?> >
+                                    <a href="index.php?<?php echo $this->j-1 ;?>"><i class="material-icons">chevron_right</i></a>
+                                </li>       
+                            </ul>
+                        </nav>
+                    </td>
+                </tr>  
+            <?php 
             $this->con->close();
         }
         // metodo de busqueda o filtro
         public function filtro($bus,$tip) {
             $this->buscar=$bus;
             $this->tipo=$tip;
-            
-            if($this->buscar == NULL) {    
-                
-                $objetoMostrarUsuarios = new usuarios();
-                $objetoMostrarUsuarios->mostrarUsuarios();
-            }
-            else {
+                       
                 switch ($this->tipo){
                     case 'apellido': $this->consulta=$this->con->query("SELECT * FROM usuarios WHERE apellido LIKE '%$this->buscar%' ORDER BY apellido ASC, nombre ASC");
                         break;
                     case 'dni': $this->consulta=$this->con->query("SELECT * FROM usuarios WHERE dni = '$this->buscar'");
                         break;
                     case 'telefono': $this->consulta=$this->con->query("SELECT * FROM usuarios WHERE telefono = '$this->buscar' ORDER BY apellido ASC, nombre ASC");
-                        break;                    
-                    case 'clientes': $this->consulta=$this->con->query("SELECT * FROM usuarios WHERE privilegio = '4' ORDER BY apellido ASC, nombre ASC");
-                        break;                    
-                    case 'vendedores': $this->consulta=$this->con->query("SELECT * FROM usuarios WHERE privilegio = '6' ORDER BY apellido ASC, nombre ASC");
-                        break;                    
-                    case 'proveedores': $this->consulta=$this->con->query("SELECT * FROM usuarios WHERE privilegio = '5' ORDER BY apellido ASC, nombre ASC");
-                        break;                    
-                    case 'administradores': $this->consulta=$this->con->query("SELECT * FROM usuarios WHERE privilegio = '1' ORDER BY apellido ASC, nombre ASC");
-                        break;
                 }
                 $this->i=1;
                 while($this->datos= $this->consulta->fetch_array()) {
                     ?>
                         <tr>
-                            <td><?php echo $this->i;?></td>
+                            <td>
+                                <b><?php echo $this->i;?></b>
+                                <img src="fotos/<?php echo $this->datos['idUsuario'];?>" width="50px">                            
+                            </td>
                             <td><?php echo $this->datos['apellido'].", ".$this->datos['nombre'];?></td>
                             <td><?php echo $this->datos['usuario'];?></td>
                             <td><?php echo $this->datos['dni'];?></td>
@@ -107,10 +137,9 @@
                   <?php  
                     $this->i++;
                 }
-                $this->con->close();                
-            }
+                $this->con->close();
         }
-               
+                       
         //metodo guardar
         public $consultadni;
         public $consultausuario;
@@ -159,9 +188,9 @@
             else { 
             $this->consulta=$this->con->query("INSERT INTO usuarios (usuario,password,apellido,nombre,dni,email,nacimiento,
                 domicilio,localidad,provincia,nacionalidad,telefono,sexo,privilegio,fechaUsuario,idRegistrante) VALUES ('$this->usuario','$this->encriptado',
-                '$this->apellido','$this->nombre','$this->dni',$this->email','$this->nacimiento','$this->domicilio',
+                '$this->apellido','$this->nombre','$this->dni','$this->email','$this->nacimiento','$this->domicilio',
                 '$this->localidad','$this->provincia','$this->nacionalidad','$this->telefono','$this->sexo','$this->privilegio',NOW(),'$this->idregistrante')");
-                echo "<script>alert('Usuario Registrado');window.location.href='index.php';</script>";
+                //echo "<script>alert('Usuario Registrado');window.location.href='index.php?pagina=1';</script>";
             $this->con->close();
         
             }
@@ -273,7 +302,13 @@
                                 <option value="6" <?php if($this->datos['privilegio']==6){echo "selected='selected'";} ?>>Vendedor</option>
                             </select>
                         </div>                            
-                    </div>                    
+                    </div>   
+                    <div class="col-md-3">
+                        <div class="form-group">
+                        <label for="foto">Imagen</label>
+                        <input type="file" class="form-control" name="foto" id="foto">
+                        </div>
+                    </div>
                 <?php                    
             }
             $this->con->close();
@@ -304,8 +339,11 @@
                                                                     telefono='$this->telefono', sexo='$this->sexo',
                                                                     privilegio='$this->privilegio',edad='$this->edad'
                                                 WHERE idUsuario ='$this->idusuario'");
-             
-            echo "<script>alert('Usuario Modificado');window.location.href='index.php'</script>";
+            if($_SESSION['idusu']== $this->idusuario){
+                 $_SESSION['usu']=$this->apellido.", ".$this->nombre;
+            }            
+            
+            echo "<script>alert('Usuario Modificado');window.location.href='index.php?pagina=1'</script>";
             $this->con->close();
         }
         // metodo eliminar usuario
@@ -313,7 +351,7 @@
             $this->idusuario=$id;
             $this->consulta= $this->con->query("DELETE FROM usuarios WHERE idUsuario='$this->idusuario'");
             $this->con->close();
-            echo "<script>alert('Usuario eliminado');window.location.href='index.php'</script>";
+            echo "<script>alert('Usuario eliminado');window.location.href='index.php?pagina=1'</script>";
         }
         // metodo para cambiar la clave
         public $pass1;
@@ -341,6 +379,45 @@
             }else{
                 echo "<script>alert('La clave actual es incorrecta')</script>";
             }
+        }
+        //metodos para procesar la busqueda de ajax
+        public function resultados($bus){
+            $this->busqueda=$bus;
+            $this->consulta= $this->con->query("SELECT * FROM usuarios WHERE apellido like '%$this->busqueda%'");
+            if($this->busqueda==''){
+                
+            }else{
+                
+            
+            ?>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr class="bg-blue">
+                            <th>APELLIDO Y NOMBRE</th>
+                            <th>DNI</th>
+                            <th>EDAD</th>
+                            <th>DIRECCIÓN</th>
+                            <th>CONTACTO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            while($this->datos= $this->consulta->fetch_array()){
+                               ?>
+                                <tr>
+                                    <td><?php echo $this->datos['apellido'].', '.$this->datos['nombre'] ?></td>
+                                    <td><?php echo $this->datos['dni']?></td>
+                                    <td><?php echo $this->datos['edad'] ?></td>
+                                    <td><?php echo $this->datos['domicilio'] ?></td>
+                                    <td><?php echo $this->datos['email']?></td>
+                                </tr>
+                                <?php
+                            }
+                        ?>
+                    </tbody>
+                </table> 
+            <?php            
+            }            
         }
          
     }

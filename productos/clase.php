@@ -22,14 +22,28 @@
         public $nombreCategoria;
         public $idUsuario;
         public $encontrados;
+        public $cantidadMostrar;
+        public $pagina;
+        public $cantidadTotalRegistros;
+        public $redondeoFinal;
+        public $consultaMostrar;
+        public $j;
 
 
 
         //metodos
         //metodo de mostrar usuarios
-        public function mostrarProductos() {
+        public function mostrarProductos($pag) {
+            $this->cantidadMostrar = 10;
+            $this->pagina = $pag;
+            $this->cantidadTotalRegistros = $this->con->query("SELECT * FROM productos");
+            $this->redondeoFinal = ceil($this->cantidadTotalRegistros->num_rows/$this->cantidadMostrar);
             
-            $this->consulta=$this->con->query("SELECT p.*, c.nombreCategoria, u.apellido, u.nombre FROM productos p INNER JOIN categorias c ON c.idCategoria=p.idCategoria INNER JOIN usuarios u ON u.idUsuario=p.idUsuario ORDER BY P.nombreProducto ASC");
+            $this->consultaMostrar = "SELECT * FROM productos  p INNER JOIN categorias c on c.idCategoria=p.idCategoria ORDER BY idProducto DESC LIMIT ".(($this->pagina-1)*$this->cantidadMostrar).",".$this->cantidadMostrar;
+            $this->consulta= $this->con->query($this->consultaMostrar);
+            
+            
+            //$this->consulta=$this->con->query("SELECT p.*, c.nombreCategoria, u.apellido, u.nombre FROM productos p INNER JOIN categorias c ON c.idCategoria=p.idCategoria INNER JOIN usuarios u ON u.idUsuario=p.idUsuario ORDER BY P.nombreProducto ASC");
             $this->i=1;
             while($this->datos= $this->consulta->fetch_array()) {
                 ?>
@@ -55,6 +69,29 @@
               <?php  
                 $this->i++;
             }
+            ?>
+                <tr>
+                    <td colspan="12" class="text-center">
+                        <nav>
+                            <ul class="pagination">
+                                <li <?php if($this->pagina==1) {echo "class='disabled'";} ?> ><a href="index.php?pagina=1"><i class="material-icons">chevron_left</i></a></li>
+                                <?php 
+                                    for($this->j=1; $this->j<= $this->redondeoFinal; $this->j++) {
+                                    ?>
+                                        <li <?php if($this->pagina== $this->j){echo "class='active'";} ?>>
+                                            <a class="waves-effect" href="index.php?pagina=<?php echo $this->j; ?>"><?php echo $this->j; ?></a>
+                                        </li>
+                                    <?php
+                                    }                                    
+                                ?>
+                                <li <?php if($this->pagina==($this->j-1)) {echo "class='disabled'";} ?> >
+                                    <a href="index.php?<?php echo $this->j-1 ;?>"><i class="material-icons">chevron_right</i></a>
+                                </li>       
+                            </ul>
+                        </nav>
+                    </td>
+                </tr>  
+            <?php
             $this->con->close();
         }
         // metodo de busqueda o filtro
@@ -87,7 +124,10 @@
                     while($this->datos= $this->consulta->fetch_array()) {
                         ?>
                             <tr>
-                                <td><?php echo $this->i;?></td>
+                                <td>
+                                    <b><?php echo $this->i;?></b>
+                                    <img src="fotos/<?php echo $this->datos['codigo'];?>" width="50px">                            
+                                </td>
                                 <td><?php echo $this->datos['codigo'];?></td>
                                 <td><?php echo $this->datos['nombreProducto'];?></td>
                                 <td><?php echo $this->datos['descripcion'];?></td>
@@ -98,7 +138,7 @@
                                 <td>
                                     <div>
                                         <a class="btn btn-success btn-sm" href="formmodificar.php?idProducto=<?php echo $this->datos['idProducto'];?>"><i class="material-icons">create</i></a>
-                                        <a class="btn btn-danger btn-sm" href="formeliminar.php?isProducto=<?php echo $this->datos['idProducto'];?>"><i class="material-icons">delete</i></a>
+                                        <a class="btn btn-danger btn-sm" href="formeliminar.php?idProducto=<?php echo $this->datos['idProducto'];?>"><i class="material-icons">delete</i></a>
                                     </div>
                                 </td>
                             </tr> 
@@ -205,7 +245,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                             <label for="foto">Imagen</label>
-                            <input type="file" class="form-control" name="foto" id="foto" required="">
+                            <input type="file" class="form-control" name="foto" id="foto" >
                             </div>
                         </div>
                     </div>
@@ -243,13 +283,14 @@
                                                                     precioVenta='$this->precioVenta', precioCompra='$this->precioCompra', idCategoria='$this->idCategoria'
                                                 WHERE idProducto ='$this->idProducto'");
             $this->con->close();
+             echo "<script>alert('Producto modificado');window.location.href='index.php?pagina=1'</script>";
         }
         // metodo eliminar usuario
         public function eliminarProducto($id){
             $this->idProducto=$id;
             $this->consulta= $this->con->query("DELETE FROM productos WHERE idProducto='$this->idProducto'");
             $this->con->close();
-            echo "<script>alert('Producto eliminado');window.location.href='index.php'</script>";
+            echo "<script>alert('Producto eliminado');window.location.href='index.php?pagina=1'</script>";
         } 
         // metodo para seleccionar categorias
         public function selectCategorias() {

@@ -51,9 +51,9 @@
         } 
         // metodo detalles
         
-        public function detallesNuevaVenta($bus,$idReg,$idfac) {
+        public function detallesNuevaVenta($bus, $idreg, $idfac) {
             $this->buscar = $bus;
-            $this->idRegistrante = $idReg;
+            $this->idRegistrante = $idreg;
             $this->idFactura = $idfac;
             $this->consulta = $this->con->query("SELECT * FROM productos WHERE codigo = '$this->buscar'");
             if($this->datos = $this->consulta->fetch_array()) {
@@ -67,7 +67,7 @@
                 else {
                     $this->cantidadProducto=1;
                     $this->subtotal = $this->precio * $this->cantidadProducto;
-                    $this->con->query("INSERT INTO detallesFacturas (idFactura, idProducto, cantidadProducto, precio, subtotal,
+                    $this->con->query("INSERT INTO detallesfacturas (idFactura, idProducto, cantidadProducto, precio, subtotal,
                              idRegistrante) VALUES ('$this->idFactura','$this->idProducto','$this->cantidadProducto',
                              '$this->precio','$this->subtotal','$this->idRegistrante')");
                     $this->cantidadDisponible = $this->cantidad - $this->cantidadProducto;
@@ -80,7 +80,7 @@
          // método para mostrar los detalles de las ventas
             public  function mostrarDetalles($idfac) {
                 $this->idFactura = $idfac;
-                $this->consulta = $this->con->query("SELECT df.*, p.* FROM detallesFacturas df 
+                $this->consulta = $this->con->query("SELECT df.*, p.* FROM detallesfacturas df 
                         INNER JOIN productos p on p.idProducto = df.idProducto
                         WHERE df.idFactura = '$this->idFactura'
                         ORDER BY df.idDetalle ASC");
@@ -119,7 +119,7 @@
             // método para quitar productos
             public function quitar($iddf){
                 $this->idDetalle= $iddf;
-                $this->consulta= $this->con->query("SELECT * FROM detallesFacturas WHERE idDetalle = '$this->idDetalle'");
+                $this->consulta= $this->con->query("SELECT * FROM detallesfacturas WHERE idDetalle = '$this->idDetalle'");
                 if($this->datos= $this->consulta->fetch_array()){
                     $this->idProducto = $this->datos['idProducto'];
                     $this->cantidadProducto = $this->datos['cantidadProducto'];
@@ -131,7 +131,7 @@
                     }
                     $this->cantidadDisponible= $this->cantidadProducto + $this->cantidad;
                     $this->con->query("UPDATE productos SET cantidad ='$this->cantidadDisponible'  WHERE idProducto='$this->idProducto' ");
-                    $this->con->query("DELETE FROM detallesFacturas WHERE idDetalle='$this->idDetalle'");
+                    $this->con->query("DELETE FROM detallesfacturas WHERE idDetalle='$this->idDetalle'");
                     echo "<script>window.location.href='index.php?idFactura=$this->idFactura'</script>";
                     
                 }
@@ -139,7 +139,7 @@
             // método para cancelar toda la venta
             public function cancelar($idf){
                 $this->idFactura= $idf;
-                $this->consulta= $this->con->query("SELECT * FROM detallesFacturas WHERE idFactura = '$this->idFactura'");
+                $this->consulta= $this->con->query("SELECT * FROM detallesfacturas WHERE idFactura = '$this->idFactura'");
                 while ($this->datos= $this->consulta->fetch_array()){
                     $this->idProducto = $this->datos['idProducto'];
                     $this->cantidadProducto = $this->datos['cantidadProducto'];                    
@@ -150,7 +150,7 @@
                     }
                     $this->cantidadDisponible= $this->cantidadProducto + $this->cantidad;
                     $this->con->query("UPDATE productos SET cantidad ='$this->cantidadDisponible'  WHERE idProducto='$this->idProducto' ");
-                    $this->con->query("DELETE FROM detallesFacturas WHERE idFactura='$this->idFactura'");
+                    $this->con->query("DELETE FROM detallesfacturas WHERE idFactura='$this->idFactura'");
                     echo "<script>alert('Factura Cancelada');window.location.href='../acceso/plantilla.php'</script>";
                     
                 }

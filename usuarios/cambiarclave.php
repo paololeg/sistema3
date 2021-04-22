@@ -22,34 +22,53 @@
     
     <!-- Entorno de Trabajo -->
     <section class="content">
-        <div class="container-fluid">
-            <div class="block-header">   
-                <h3>Cambiar clave</h3>             
-            </div>
-            <div class="body table-responsive">
-                <form action="cambiarclave.php" method="POST">
-                    <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['idusu']?>"
-                    <div class="form-inline col-sm-3">
-                        <input type="text" class="form-control" name="pass1" placeholder="Ingrese su contraseña actual" required="">                        
-                    </div> 
-                    <div class="form-inline col-sm-3">
-                        <input type="text" class="form-control" name="pass2" placeholder="Ingrese su contraseña nueva" required="">                        
-                    </div> 
-                    <div class="form-inline col-sm-3">
-                        <input type="text" class="form-control" name="pass3" placeholder="Repita su contraseña nueva" required="">                        
-                    </div> 
-                    <div class="form-inline col-sm-3">
-                        <button type="submit" class="btn btn-success waves-effect">Modificar</button>
+        <div class="container-fluid">            
+            <div class="row clearfix">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                Cambiar clave
+                            </h2>                            
+                        </div>
+                        <div class="body">
+                            <form action="cambiarclave.php" method="POST">
+                                <input type="hidden" name="idUsuario" value="<?php echo $_SESSION['idusu']?>"
+                                <br>
+                                <label for="pass1">Clave actual</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="password" id="pass1" name="pass1" class="form-control" placeholder="Ingrese su clave actual" required="">
+                                    </div>
+                                </div>
+                                <br>
+                                 <label for="pass2">Clave nueva</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="password" id="pass2" name="pass2" class="form-control" placeholder="Ingrese su clave nueva" required="">
+                                    </div>
+                                </div>
+                                <br>
+                                 <label for="pass3">Confirmar clave nueva</label>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="password" id="pass3" name="pass3" class="form-control" placeholder="Repita su clave nueva" required="">
+                                    </div>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-success m-t-15 waves-effect">Modificar</button>
+                            </form>
+                        </div>
                     </div>
-                </form>
+                </div>
+            </div>
+           
                 <?php
-                if(isset($_POST['idUsuario'])){                    
-                    $objetoclave = new usuarios();
-                    $objetoclave->cambiarClave($_POST['idUsuario'],$_POST['pass1'],$_POST['pass2'],$_POST['pass3']); 
-                }
-                ?>
-                
-            </div>    
+                    if(isset($_POST['idUsuario'])){                    
+                        $objetoclave = new usuarios();
+                        $objetoclave->cambiarClave($_POST['idUsuario'],$_POST['pass1'],$_POST['pass2'],$_POST['pass3']); 
+                    }
+                ?>   
         </div>
     </section>
     <!-- Fin Entorno de Trabajo -->

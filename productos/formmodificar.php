@@ -8,7 +8,7 @@
     <?php include '../config/head.php'; ?>
     <link href="../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -35,7 +35,7 @@
                         }                  
                     ?>
                     <button id="guardar" type="submit" class="btn btn-primary">Modificar</button>
-                    <a href="index.php" class="btn btn-danger">Cancelar</a>
+                    <a href="index.php?pagina=1" class="btn btn-danger">Cancelar</a>
                     
                 </form>
                 <?php
@@ -45,7 +45,7 @@
                                                                 $_POST['cantidad'],$_POST['precioVenta'],$_POST['precioCompra'],$_POST['idCategoria']);
                         $ubicaciontemporal = $_FILES['foto']['tmp_name'];
                         if(move_uploaded_file($ubicaciontemporal,'fotos/'.$_POST['codigo'])){
-                            echo "<script>alert('Producto Modificado');window.location.href='index.php'</script>";
+                            echo "<script>alert('Producto Modificado');window.location.href='index.php?pagina=1'</script>";
                         }
                     }
                 ?>

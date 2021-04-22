@@ -7,7 +7,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php // include  '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -77,7 +77,7 @@
                                         if(isset($_GET['fechaDesde'])){
                                             $objetoMostrar->filtro($_GET['fechaDesde'],$_GET['fechaHasta']);
                                         }else{                                            
-                                            $objetoMostrar->mostrarEgresos();
+                                            $objetoMostrar->mostrarEgresos($_GET['pagina']);
                                         }                                        
                                     ?>                                                                    
                                 </tbody>

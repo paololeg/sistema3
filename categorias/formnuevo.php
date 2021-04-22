@@ -7,7 +7,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -34,7 +34,7 @@
                         </div>                         
                     </div> 
                     <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="index.php" class="btn btn-danger">Cancelar</a>
+                    <a href="index.php?pagina=1" class="btn btn-danger">Cancelar</a>
                 </form>
                 <?php
                 include 'clase.php';

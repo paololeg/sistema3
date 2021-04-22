@@ -1,5 +1,10 @@
-<?php include '../config/sesion.php';
+<?php 
+    include '../config/sesion.php';
+    include 'clase.php';
     $pagina=8;
+    if($_SESSION['rol']==6) {
+        header('location:../acceso/plantilla.php');   
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -7,7 +12,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -22,31 +27,87 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-                 <h2>CAJA</h2>
-                 <a class="btn btn-primary" href="iniciar.php">Iniciar Caja</a>
+                 <h1><b>CAJA - <?php echo $_GET['idCaja']?></b></h1>
             </div> 
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-                            <form id="formnuevo" action="index.php" method="GET">
-                                <div class="form-group">
-                                    <label for="importeCaja">Saldo Inicial</label>
-                                    <input type="number" class="form-control" id="importeCaja" name="importeCaja" required="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="ventas">Ingresos por Ventas</label>
-                                    <input type="number" class="form-control" id="ventas" name="ventas" required="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="egresos">Egresos</label>
-                                    <input type="number" class="form-control" id="egresos" name="egresos" required="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="total">TOTAL</label>
-                                    <input type="number" class="form-control" id="total" name="total" required="">
-                                </div>
-                            </form> 
+                            <div class="body table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">
+                                                <a class="btn btn-primary" href="iniciar.php">Iniciar Caja</a>
+                                                <br>
+                                                <?php 
+                                                    $objetoSaldoInicial= new Caja();
+                                                    $objetoSaldoInicial->mostrarSaldoInicial($_GET['idCaja'])
+                                                ?>
+                                            </th>
+                                            <th class="text-right">
+                                                <a class="btn btn-warning" href="cerrarcaja.php?idCaja=<?php echo $_GET['idCaja']?>" >Cerrar caja</a>
+                                                <br>
+                                                <?php 
+                                                    $objetoSaldoFinal= new Caja();
+                                                    $objetoSaldoFinal->mostrarSaldoFinal($_GET['idCaja'])
+                                                ?>
+                                            </th>
+                                       
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6">INGRESOS</th>
+                                            <th class="text-center">
+                                                <a class="btn btn-primary" href="formnuevoingreso.php?idCaja=<?php echo $_GET['idCaja']?>">Nuevo Ingreso</a>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Fecha</th>
+                                            <th>Tipo</th>
+                                            <th>Valor</th>
+                                            <th>Detalle</th>
+                                            <th>Importe</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            $objetoMostrarIngresos = new Caja();
+                                            $objetoMostrarIngresos->mostrarIngresos($_GET['idCaja']);
+                                        ?>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6">EGRESOS</th>
+                                            <th class="text-center">
+                                                <a class="btn btn-primary" href="formnuevoegreso.php?idCaja=<?php echo $_GET['idCaja']?>">Nuevo Egreso</a>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Fecha</th>
+                                            <th>Tipo</th>
+                                            <th>Valor</th>
+                                            <th>Detalle</th>
+                                            <th>Importe</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            $objetoMostrarEgresos = new Caja();
+                                            $objetoMostrarEgresos->mostrarEgresos($_GET['idCaja']);
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

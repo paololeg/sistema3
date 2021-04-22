@@ -7,7 +7,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -71,7 +71,7 @@
                                         if(isset($_GET['buscar'])){
                                             $objetoMostrar->filtro($_GET['buscar'],$_GET['tipo']);
                                         }else{                                            
-                                            $objetoMostrar->mostrarProductos();
+                                            $objetoMostrar->mostrarProductos($_GET['pagina']);
                                         }                                        
                                     ?>                                                                    
                                 </tbody>

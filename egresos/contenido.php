@@ -20,22 +20,22 @@
         </tbody>
     </table>
     <table style="width: 100%; margin-top: 10px;" border="0">
-    <tbody>
-        <tr>
-        <td style="text-align: center;" colspan="2"><span style="font-size: large;"><strong>COMPROBANTE DE CAJA</strong></span></td>
-        </tr>
-        <tr>
-            <td style="text-align: left;" colspan="2"><span style="font-size: medium;"><strong><strong><strong>&nbsp;</strong></strong></strong></span>&nbsp;   
-                <hr />
-            </td>
-        </tr>
-        <?php
-              include 'clase.php';
-              if(!isset($_POST['descripcionEgreso'])){
-                  $objetoDatos = new egresos();
-                  $objetoDatos->datosImprimir($_GET['idEgreso']);                        
-              }  
-        ?>
+        <tbody>
+            <tr>
+                <td style="text-align: center;" colspan="2"><span style="font-size: large;"><strong>COMPROBANTE DE CAJA</strong></span></td>
+            </tr>
+            <tr>
+                <td style="text-align: left;" colspan="2"><span style="font-size: medium;"><strong><strong><strong>&nbsp;</strong></strong></strong></span>&nbsp;   
+                    <hr />
+                </td>
+            </tr>
+            <?php
+                  include 'clase.php';
+                  if(!isset($_POST['descripcionEgreso'])){
+                      $objetoDatos = new egresos();
+                      $objetoDatos->datosImprimir($_GET['idEgreso']);                        
+                  }  
+            ?>
         </tbody>
     </table>    
 </body>

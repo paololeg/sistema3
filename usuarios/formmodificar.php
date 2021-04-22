@@ -25,7 +25,7 @@
             <div class="block-header">   
                 <h3>Modificar Usuario</h3>
                 <hr>
-                <form action="formmodificar.php" method="POST" id="formmodificar"> 
+                <form action="formmodificar.php" method="POST" id="formmodificar" enctype="multipart/form-data"> 
                     <input type="hidden" name="idusuario" value="<?php echo $_GET['idUsuario']?>">
                     <?php
                         include 'clase.php';
@@ -35,7 +35,7 @@
                         }                  
                     ?>
                     <button id="guardar" type="submit" class="btn btn-primary">Modificar</button>
-                    <a href="index.php" class="btn btn-danger">Cancelar</a>
+                    <a href="index.php?pagina=1" class="btn btn-danger">Cancelar</a>
                     
                 </form>
                 <?php
@@ -46,6 +46,10 @@
                                                                 $_POST['domicilio'],$_POST['localidad'],$_POST['provincia'],
                                                                 $_POST['nacionalidad'],$_POST['telefono'],$_POST['sexo'],
                                                                 $_POST['privilegio'],$_POST['idusuario'],$_POST['edad']);
+                        $ubicaciontemporal = $_FILES['foto']['tmp_name'];
+                        if(move_uploaded_file($ubicaciontemporal,'fotos/'.$_POST['idusuario'])){
+                            echo "<script>alert('Usuario Modificado');window.location.href='index.php?pagina=1'</script>";
+                        }
                     }
                 ?>
             </div>

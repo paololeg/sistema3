@@ -30,24 +30,24 @@
                     <div class="card">
                         <div class="header"> 
                             <form id="formmodificar" action="formmodificar.php" method="POST">                                              
-                                <input type="text" name="idSueldo" value="<?php echo $_GET['idSueldo']?>">   
+                                <input type="hidden" name="idSueldo" value="<?php echo $_GET['idSueldo']?>">
+                                <input type="hidden" id="anioSueldo" name="anioSueldo" value="<?php echo $_GET['anioSueldo']?>" required="">
+                                <input type="hidden" id="idUsuario" name="idUsuario" value="<?php echo $_GET['idUsuario']?>" required="" >
                                 <?php        
                                     if(!isset($_POST['mesSueldo'])){
                                     $objetoDatos = new Sueldo();
                                     $objetoDatos->datosModificar($_GET['idSueldo']);
                                     }
                                 ?>                            
-                                <div class="form-group">                                
-                                    <button class="btn btn-success" type="submit">Modificar</button>
-                                    <a class="btn btn-danger" href="index.php">Cancelar</a>
-                                </div>
+                                
                             </form>
                              <?php       
                                 if(isset($_POST['mesSueldo'])){  
                                 $objetoModificar = new Sueldo();    
                                 $objetoModificar->confirmarModificacion($_POST['idSueldo'],$_POST['diasTrabajados'],$_POST['basico'],$_POST['obraSocial'],
                                                                                     $_POST['antiguedad'],$_POST['diasFeriados'],$_POST['feriadosTrabajados'],
-                                                                                    $_POST['feriadosNoTrabajados'],$_POST['fecha']); 
+                                                                                    $_POST['feriadosNoTrabajados'],$_POST['fecha'],$_POST['mesSueldo'],
+                                                                                    $_POST['anioSueldo'],$_POST['idUsuario']); 
                                }
                             ?>
                         </div>

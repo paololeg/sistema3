@@ -7,7 +7,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
   
     <!-- Fin Loader -->
@@ -67,7 +67,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                             <label for="foto">Imagen</label>
-                            <input type="file" class="form-control" name="foto" id="foto" required="">
+                            <input type="file" class="form-control" name="foto" id="foto">
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                         </div>
                     </div>                                     
                     <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="index.php" class="btn btn-danger">Cancelar</a>
+                    <a href="index.php?pagina=1" class="btn btn-danger">Cancelar</a>
                 </form>
                 <?php
                
@@ -97,7 +97,7 @@
                     
                     $ubicaciontemporal = $_FILES['foto'] ['tmp_name'];
                     if(move_uploaded_file($ubicaciontemporal,'fotos/'.$_POST['codigo'])){
-                       echo "<script>alert('Producto Registrado');window.location.href='index.php';</script>"; 
+                       echo "<script>alert('Producto Registrado');window.location.href='index.php?pagina=1';</script>"; 
                     }    
                 }
                 ?>

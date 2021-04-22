@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/sistema3/sueldo/clase.php</file>
-            <file>file:/C:/xampp/htdocs/sistema3/categorias/formmodificar.php</file>
-            <file>file:/C:/xampp/htdocs/sistema3/sueldo/formmodificar.php</file>
-            <file>file:/C:/xampp/htdocs/sistema3/categorias/clase.php</file>
+            <file>file:/C:/xampp/htdocs/sistema3/operaciones/formnuevo.php</file>
+            <file>file:/C:/xampp/htdocs/sistema3/operaciones/clase.php</file>
+            <file>file:/C:/xampp/htdocs/sistema3/config/conexion.php</file>
+            <file>file:/C:/xampp/htdocs/sistema3/acceso/plantilla.php</file>
         </group>
     </open-files>
 </project-private>

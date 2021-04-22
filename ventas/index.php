@@ -13,7 +13,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -47,7 +47,7 @@
                                 </form>
                                 <a class="btn btn-danger" onclick="return confirm('¿Desea cancelar la venta?')" href="cancelar.php?idFactura=<?php echo $_GET['idFactura'] ; ?>">Cancelar Venta</a>
                                  <hr>  
-                                 <h2>FACTURA Nº<?php echo $_GET['idFactura'];?></h2>
+                                 <h2>FACTURA Nº <?php echo $_GET['idFactura'];?></h2>
                             </div>                           
                         </div>
                         <div class="body table-responsive">

@@ -13,11 +13,25 @@
         public $horaEgreso;
         public $fechaDesde;
         public $fechaHasta;
+        public $cantidadMostrar;
+        public $pagina;
+        public $cantidadTotalRegistros;
+        public $redondeoFinal;
+        public $consultaMostrar;
+        public $j;
 
         //metodos
         //metodo de mostrar egresos
-        public function mostrarEgresos() {
-            $this->consulta=$this->con->query("SELECT * FROM egresos ORDER BY fechaEgreso ASC");
+        public function mostrarEgresos($pag) {
+            $this->cantidadMostrar = 10;
+            $this->pagina = $pag;
+            $this->cantidadTotalRegistros = $this->con->query("SELECT * FROM egresos");
+            $this->redondeoFinal = ceil($this->cantidadTotalRegistros->num_rows/$this->cantidadMostrar);
+            
+            $this->consultaMostrar = "SELECT * FROM egresos ORDER BY idEgreso DESC LIMIT ".(($this->pagina-1)*$this->cantidadMostrar).",".$this->cantidadMostrar;
+            $this->consulta= $this->con->query($this->consultaMostrar);            
+            
+            //$this->consulta=$this->con->query("SELECT * FROM egresos ORDER BY fechaEgreso ASC");
             $this->i=1;
             while($this->datos= $this->consulta->fetch_array()) {
                 ?>
@@ -37,6 +51,29 @@
               <?php  
                 $this->i++;
             }
+            ?>
+                <tr>
+                    <td colspan="12" class="text-center">
+                        <nav>
+                            <ul class="pagination">
+                                <li <?php if($this->pagina==1) {echo "class='disabled'";} ?> ><a href="index.php?pagina=1"><i class="material-icons">chevron_left</i></a></li>
+                                <?php 
+                                    for($this->j=1; $this->j<= $this->redondeoFinal; $this->j++) {
+                                    ?>
+                                        <li <?php if($this->pagina== $this->j){echo "class='active'";} ?>>
+                                            <a class="waves-effect" href="index.php?pagina=<?php echo $this->j; ?>"><?php echo $this->j; ?></a>
+                                        </li>
+                                    <?php
+                                    }                                    
+                                ?>
+                                <li <?php if($this->pagina==($this->j-1)) {echo "class='disabled'";} ?> >
+                                    <a href="index.php?<?php echo $this->j-1 ;?>"><i class="material-icons">chevron_right</i></a>
+                                </li>       
+                            </ul>
+                        </nav>
+                    </td>
+                </tr>  
+            <?php
             $this->con->close();
         }
         // metodo de busqueda o filtro
@@ -45,7 +82,7 @@
             $this->fechaDesde=$des;
             $this->fechaHasta=$has;
             
-            if($this->fechaHasta = NULL) {
+            if($this->fechaHasta == NULL) {
                 
                 $objetoMostrarTodos = new egresos();
                 $objetoMostrarTodos->mostrarEgresos();
@@ -87,7 +124,7 @@
             
            
             $this->consulta=$this->con->query("INSERT INTO egresos (descripcionEgreso,importeEgreso,fechaEgreso,horaEgreso) VALUES ('$this->descripcionEgreso','$this->importeEgreso','$this->fechaEgreso','$this->horaEgreso')");
-            echo "<script>alert('Egreso Registrado');window.location.href='index.php';</script>";
+            echo "<script>alert('Egreso Registrado');window.location.href='index.php?pagina=1';</script>";
             $this->con->close();
         }
         // metodo mostrar datos a modificar
@@ -126,7 +163,7 @@
                        
             $this->consulta = $this->con->query("UPDATE egresos SET descripcionEgreso='$this->descripcionEgreso', importeEgreso='$this->importeEgreso', fechaEgreso='$this->fechaEgreso' WHERE idEgreso='$this->idEgreso'");
              
-            echo "<script>alert('Egreso Modificado');window.location.href='index.php'</script>";
+            echo "<script>alert('Egreso Modificado');window.location.href='index.php?pagina=1'</script>";
             $this->con->close();
         }
         // metodo eliminar usuario
@@ -134,7 +171,7 @@
             $this->idEgreso=$id;
             $this->consulta= $this->con->query("DELETE FROM egresos WHERE idEgreso='$this->idEgreso'");
             $this->con->close();
-            echo "<script>alert('Egreso eliminado');window.location.href='index.php'</script>";
+            echo "<script>alert('Egreso eliminado');window.location.href='index.php?pagina=1'</script>";
         }
         //metodo para mostrar egreso a imprimir
         public function datosImprimir($id){

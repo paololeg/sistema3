@@ -6,11 +6,15 @@
             break;
         case 2: $rol='USUARIO ESTANDAR';
             break;
-        case 3: $rol='USUARIO LIMITADO';
+        case 3: $rol='CAJERO';
+            header('/acceso/plantilla.php');
             break;
         case 4: $rol='CLIENTE';
             break;
         case 5: $rol='PROVEEDOR';
+            break;
+        case 6: $rol='VENDEDOR';
+            header('/acceso/plantilla.php');
         }
     }else {
         header("location:../index.php");

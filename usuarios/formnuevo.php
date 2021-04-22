@@ -7,7 +7,7 @@
 <head>
     <?php include '../config/head.php'; ?>
 </head>
-<body class="theme-red">
+<body class="theme-blue">
     <!-- Loader -->
     <?php // include '../config/loader.php'; ?>
     <!-- Fin Loader -->
@@ -24,7 +24,7 @@
             <div class="block-header">   
                 <h3>Nuevo Usuario</h3>
                 <hr>
-                <form action="formnuevo.php" method="POST" id="formnuevo"> 
+                <form action="formnuevo.php" method="POST" id="formnuevo" enctype="multipart/form-data"> 
                     <input type="hidden" name="idregistrante" value="<?php echo $_SESSION['idusu']?>">
                     <div class="row clearfix">
                         <div class=" col-md-3">
@@ -129,8 +129,14 @@
                             </select>
                         </div>                            
                     </div>
+                    <div style="width: 400px">
+                        <div class="form-group">
+                            <label for="foto">Imagen</label>
+                            <input type="file" class="form-control" name="foto" id="foto" required="">
+                        </div>
+                    </div>
                     <button id="guardar" type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="index.php" class="btn btn-danger">Cancelar</a>
+                    <a href="index.php?pagina=1" class="btn btn-danger">Cancelar</a>
                 </form>
                 <?php
                 include 'clase.php';
@@ -139,6 +145,11 @@
                     $objetoNuevo->guardar($_POST['usuario'],$_POST['password'],$_POST['apellido'],$_POST['nombre'],
                             $_POST['dni'],$_POST['email'],$_POST['nacimiento'],$_POST['domicilio'],$_POST['localidad'],
                             $_POST['provincia'],$_POST['nacionalidad'],$_POST['telefono'],$_POST['sexo'],$_POST['privilegio'],$_POST['idregistrante']);
+                    
+                    $ubicaciontemporal = $_FILES['foto'] ['tmp_name'];
+                    if(move_uploaded_file($ubicaciontemporal,'fotos/'.$_POST['dni'])){
+                      echo "<script>alert('Usuario Registrado');window.location.href='index.php?pagina=1';</script>"; 
+                    }    
                 }
                 ?>
             </div>
